@@ -24,7 +24,8 @@ export default {
   },
 
   toState(data, oldHue) {
-    const color = data.hex ? tinycolor(data.hex) : tinycolor(data)
+    // Check to remove the tinycolor form the state so it doesn't autocomplete the color.
+    const color = data.hex ? data.hex : data
     const hsl = color.toHsl()
     const hsv = color.toHsv()
     const rgb = color.toRgb()
@@ -48,6 +49,7 @@ export default {
   isValidHex(hex) {
     // disable hex4 and hex8
     const lh = (String(hex).charAt(0) === '#') ? 1 : 0
+    // Check why the values to validate the length were 4 and 7
     return hex.length !== (3 + lh) && hex.length < (6 + lh) && tinycolor(hex).isValid()
   },
 
